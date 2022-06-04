@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Cases\CaseEditScreen;
+use App\Orchid\Screens\Cases\CasesListScreen;
+use App\Orchid\Screens\Categories\CategoryEditScreen;
+use App\Orchid\Screens\Categories\CategoriesListScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -41,6 +45,24 @@ Route::screen('profile', UserProfileScreen::class)
             ->parent('platform.index')
             ->push(__('Profile'), route('platform.profile'));
     });
+
+Route::screen('cases', CasesListScreen::class)
+    ->name('platform.cases');
+
+Route::screen('cases/create', CaseEditScreen::class)
+    ->name('platform.systems.cases.create');
+
+Route::screen('cases/{case}/edit', CaseEditScreen::class)
+    ->name('platform.systems.cases.edit');
+
+Route::screen('categories', CategoriesListScreen::class)
+    ->name('platform.categories');
+
+Route::screen('categories/create', CategoryEditScreen::class)
+    ->name('platform.systems.categories.create');
+
+Route::screen('categories/{category}/edit', CategoryEditScreen::class)
+    ->name('platform.systems.categories.edit');
 
 // Platform > System > Users
 Route::screen('users/{user}/edit', UserEditScreen::class)
