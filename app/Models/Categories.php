@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Categories extends Model
 {
@@ -13,4 +14,9 @@ class Categories extends Model
         'name',
         'img',
     ];
+
+    public function cases(): BelongsToMany
+    {
+        return $this->belongsToMany(Cases::class);
+    }
 }

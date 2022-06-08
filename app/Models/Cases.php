@@ -16,9 +16,6 @@ class Cases extends Model
         'img'
     ];
 
-    /**
-     * Get the comments for the blog post.
-     */
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Categories::class);

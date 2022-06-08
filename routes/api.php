@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/cases', function () {
     var_dump("azaza");
 });
+
+
+Route::get('/categories', [\App\Http\Controllers\CategoriesController::class, 'index']);
