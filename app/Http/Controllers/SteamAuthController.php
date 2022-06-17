@@ -59,7 +59,6 @@ class SteamAuthController extends Controller
     {
 
         if ($this->steam->validate()) {
-            var_dump("info");
             $info = $this->steam->getUserInfo();
 
             if (!is_null($info)) {
@@ -72,6 +71,12 @@ class SteamAuthController extends Controller
         }
 
         return $this->redirectToSteam();
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect($this->redirectURL);
     }
 
     /**

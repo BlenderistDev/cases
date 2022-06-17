@@ -24,3 +24,5 @@ Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('a
 Route::get('/me', function () {
     return auth()->user();
 });
+
+Route::get('logout', [SteamAuthController::class, 'logout'])->name('logout');
