@@ -84,7 +84,6 @@ class SteamAuthController extends Controller
     {
         $user = User::where('steamid', $info->steamID64)->first();
 
-
         if (!is_null($user)) {
             return $user;
         }
@@ -95,7 +94,7 @@ class SteamAuthController extends Controller
             'avatar' => $info->avatarfull,
             'steamid' => $info->steamID64,
             'password' => "",
-            'email' => "",
+            'email' => $info->steamID64
         ]);
     }
 }

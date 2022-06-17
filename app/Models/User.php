@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'permissions',
+        'email'
     ];
 
     /**
@@ -49,7 +50,6 @@ class User extends Authenticatable
     protected $allowedFilters = [
         'id',
         'name',
-        'email',
         'permissions',
     ];
 
@@ -61,7 +61,6 @@ class User extends Authenticatable
     protected $allowedSorts = [
         'id',
         'name',
-        'email',
         'updated_at',
         'created_at',
     ];
