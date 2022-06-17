@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SteamAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (\App\Models\User $user) {
     return view('welcome');
+});
+
+Route::get('auth/steam', [SteamAuthController::class, 'redirectToSteam'])->name('auth.steam');
+Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('auth.steam.handle');
+
+Route::get('/me', function () {
+    return auth()->user();
 });

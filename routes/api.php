@@ -24,3 +24,7 @@ Route::get('/cases', function () {
 
 
 Route::get('/categories', [\App\Http\Controllers\CategoriesController::class, 'index']);
+
+Route::get('/me', function () {
+    return auth()->user();
+});
