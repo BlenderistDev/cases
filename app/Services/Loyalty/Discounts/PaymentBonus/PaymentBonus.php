@@ -17,11 +17,18 @@ class PaymentBonus
 
     public function execute(PaymentInfoEntity $paymentInfoEntity): void
     {
+
         $paymentBonusInfo = $this->paymentBonusRepository->getPaymentBonusInfo();
 
         if ($paymentInfoEntity->getPromocode() !== $paymentBonusInfo->getPromocode()) {
             return;
         }
+
+        if ($paymentBonusInfo->getCurrentCount() >= $paymentBonusInfo->getMaxCount()) {
+            return;
+        }
+
+        $this->paymentBonusRepository->increaseCurrentCount();
 
         $bonus = $paymentInfoEntity->getPrice() / 100 * $paymentBonusInfo->getValue();
         $this->userRepository->addToBalance($bonus);

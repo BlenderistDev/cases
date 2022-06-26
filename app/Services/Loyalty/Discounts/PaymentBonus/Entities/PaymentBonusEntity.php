@@ -6,7 +6,7 @@ namespace App\Services\Loyalty\Discounts\PaymentBonus\Entities;
 
 class PaymentBonusEntity
 {
-    public function __construct(private string $promocode, private int $value)
+    public function __construct(private string $promocode, private int $value, private int $currentCount, private int $maxCount)
     {
     }
 
@@ -24,5 +24,21 @@ class PaymentBonusEntity
     public function getValue(): int
     {
         return $this->value;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentCount(): int
+    {
+        return $this->currentCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxCount(): int
+    {
+        return $this->maxCount;
     }
 }

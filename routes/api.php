@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PaymentGiftWinnerController;
 use App\Services\SteamInfo\SteamUserInfoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,10 +29,12 @@ Route::get('/cases', function () {
 
 Route::get('/categories', [CategoriesController::class, 'index']);
 
-Route::get('/me', function(\App\Services\Loyalty\Loyalty $loyalty) {
+Route::get('/payment-gift', [PaymentGiftWinnerController::class, 'index']);
+
+Route::get('/me', function(\App\Services\Loyalty\Loyalty $loyalty, \App\Services\Loyalty\Discounts\PaymentGift\PaymentGift $paymentGift) {
 //    var_dump((new \App\Services\Options\OptionsService())->get('azaza'));
-//    var_dump((new \App\Services\Options\OptionsService())->get('azaza1'));
-//    exit();
+    var_dump($paymentGift->raffle(1));
+    exit();
 
     $loyalty->afterPurchaseBonus(new \App\Services\Payments\Entities\PaymentInfoEntity("azaza", 1000));
 //    var_dump($loyalty->updatePriceWithLoyalty(100));

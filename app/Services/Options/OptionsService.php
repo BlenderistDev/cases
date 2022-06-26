@@ -12,4 +12,17 @@ class OptionsService
     {
         return Options::byName($name)->get()->value('value');
     }
+
+    public function set(string $name, $value)
+    {
+        $option = Options::byName($name)->first();
+
+        if (empty($option)) {
+            $option = new Options();
+            $option->name = $name;
+        }
+
+        $option->value = $value;
+        $option->save();
+    }
 }

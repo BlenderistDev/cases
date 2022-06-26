@@ -6,6 +6,8 @@ use App\Orchid\Screens\Cases\CaseEditScreen;
 use App\Orchid\Screens\Cases\CasesListScreen;
 use App\Orchid\Screens\Categories\CategoryEditScreen;
 use App\Orchid\Screens\Categories\CategoriesListScreen;
+use App\Orchid\Screens\Dummy\DummyEditScreen;
+use App\Orchid\Screens\Dummy\DummyListScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -13,6 +15,9 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Loyalty\LoyaltyScreen;
+use App\Orchid\Screens\PaymentGift\PaymentGiftEditScreen;
+use App\Orchid\Screens\PaymentGift\PaymentGiftListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -63,6 +68,30 @@ Route::screen('categories/create', CategoryEditScreen::class)
 
 Route::screen('categories/{category}/edit', CategoryEditScreen::class)
     ->name('platform.systems.categories.edit');
+
+Route::screen('dummy', DummyListScreen::class)
+    ->name('platform.dummy');
+
+Route::screen('dummy/create', DummyEditScreen::class)
+    ->name('platform.systems.dummy.create');
+
+Route::screen('dummy/{dummy}/edit', DummyEditScreen::class)
+    ->name('platform.systems.dummy.edit');
+
+Route::screen('paymentGift', PaymentGiftListScreen::class)
+    ->name('platform.paymentGift');
+
+Route::screen('paymentGift/create', PaymentGiftEditScreen::class)
+    ->name('platform.systems.paymentGift.create');
+
+Route::screen('paymentGift/{paymentGift}/edit', PaymentGiftEditScreen::class)
+    ->name('platform.systems.paymentGift.edit');
+
+
+Route::screen('loyalty', LoyaltyScreen::class)
+    ->name('platform.loyalty');
+
+
 
 // Platform > System > Users
 Route::screen('users/{user}/edit', UserEditScreen::class)

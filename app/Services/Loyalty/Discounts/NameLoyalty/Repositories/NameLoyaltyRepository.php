@@ -24,4 +24,10 @@ class NameLoyaltyRepository
 
         return new NameLoyaltyInfo((int) $value, $pattern);
     }
+
+    public function setLoyaltyInfo(NameLoyaltyInfo $nameLoyaltyInfo): void
+    {
+        $this->optionsService->set(self::PROMOCODE_VALUE_OPTION_NAME, $nameLoyaltyInfo->getValue());
+        $this->optionsService->set(self::PROMOCODE_PATTERN_OPTION_NAME, $nameLoyaltyInfo->getPattern());
+    }
 }
