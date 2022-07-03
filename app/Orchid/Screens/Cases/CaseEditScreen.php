@@ -114,6 +114,7 @@ class CaseEditScreen extends Screen
         $case->setAttribute('name', $data['name']);
         $case->setAttribute('price', $data['price']);
         $case->setAttribute('img', $data['img']);
+        $case->categories()->detach();
         $case->categories()->attach($data['categories']);
         $case->save();
 

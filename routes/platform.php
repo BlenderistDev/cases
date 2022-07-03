@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Orchid\Screens\Cases\CaseEditScreen;
 use App\Orchid\Screens\Cases\CasesListScreen;
+use App\Orchid\Screens\CaseSkins\CaseSkinEditScreen;
+use App\Orchid\Screens\CaseSkins\CaseSkinsListScreen;
 use App\Orchid\Screens\Categories\CategoryEditScreen;
 use App\Orchid\Screens\Categories\CategoriesListScreen;
 use App\Orchid\Screens\Dummy\DummyEditScreen;
@@ -59,6 +61,12 @@ Route::screen('cases/create', CaseEditScreen::class)
 
 Route::screen('cases/{case}/edit', CaseEditScreen::class)
     ->name('platform.systems.cases.edit');
+
+Route::screen('cases/{case}/skins/list', CaseSkinsListScreen::class)
+    ->name('platform.systems.case.skins.list');
+
+Route::screen('cases/{case}/skins/edit', CaseSkinEditScreen::class)
+    ->name('platform.systems.case.skins.edit');
 
 Route::screen('categories', CategoriesListScreen::class)
     ->name('platform.categories');

@@ -58,6 +58,12 @@ class CaseListLayout extends Table
                     return Link::make(__('Edit'))
                         ->route('platform.systems.cases.edit', $case->id)
                         ->icon('pencil');
+                }),
+            TD::make('edit_skins', 'скины')
+                ->render(function (Cases $case) {
+                    return Link::make(__('Edit'))
+                        ->route('platform.systems.case.skins.list', $case->id)
+                        ->icon('pencil');
                 })
         ];
     }

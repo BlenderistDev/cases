@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Cases;
 
 use App\Models\Cases;
 use App\Orchid\Layouts\Cases\CaseListLayout;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
@@ -33,7 +34,7 @@ class CasesListScreen extends Screen
     /**
      * Button commands.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -53,19 +54,11 @@ class CasesListScreen extends Screen
     /**
      * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return iterable
      */
     public function layout(): iterable
     {
         return [
-            Layout::rows([
-                Group::make(
-                    [
-                        Button::make('Применить')->method('applyFilters')->type(Color::SECONDARY()),
-                        Button::make('Сбросить')->method('resetFilters')->type(Color::ERROR())->tabindex(3),
-                    ]
-                )->autoWidth(),
-            ]),
             CaseListLayout::class,
             Layout::rows([
                 Group::make(

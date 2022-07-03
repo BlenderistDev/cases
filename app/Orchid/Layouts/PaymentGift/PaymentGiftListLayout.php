@@ -43,6 +43,10 @@ class PaymentGiftListLayout extends Table
                 ->render(
                     fn (PaymentGift $item) => $item->active
                 ),
+            TD::make('skin', 'Скин')
+                ->render(
+                    fn (PaymentGift $item) => ($item->skin()->first()->market_hash_name . ' - ' . $item->skin()->first()->price) ?? ''
+                ),
             TD::make('delete')
                 ->render(function (PaymentGift $paymentGift) {
                     return Button::make('delete')

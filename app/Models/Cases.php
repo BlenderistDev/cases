@@ -20,4 +20,9 @@ class Cases extends Model
     {
         return $this->belongsToMany(Categories::class);
     }
+
+    public function skins(): BelongsToMany
+    {
+        return $this->belongsToMany(Skin::class);
+    }
 }

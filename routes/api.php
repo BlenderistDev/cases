@@ -31,9 +31,13 @@ Route::get('/categories', [CategoriesController::class, 'index']);
 
 Route::get('/payment-gift', [PaymentGiftWinnerController::class, 'index']);
 
-Route::get('/me', function(\App\Services\Loyalty\Loyalty $loyalty, \App\Services\Loyalty\Discounts\PaymentGift\PaymentGift $paymentGift) {
+Route::get('/me', function(\App\Services\SkinUpdate\SkinUpdateService $skinUpdateService) {
+//    (new \App\Services\Market\Request\RubItemsRequest())->makeRequest();
 //    var_dump((new \App\Services\Options\OptionsService())->get('azaza'));
-    var_dump($paymentGift->raffle(1));
+//    var_dump($paymentGift->raffle(1));
+    var_dump("azaza1");
+    var_dump("azaza2");
+    $skinUpdateService->updateSkins();
     exit();
 
     $loyalty->afterPurchaseBonus(new \App\Services\Payments\Entities\PaymentInfoEntity("azaza", 1000));

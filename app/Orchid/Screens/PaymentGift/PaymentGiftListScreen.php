@@ -20,7 +20,7 @@ class PaymentGiftListScreen extends Screen
     {
         $paymentGiftInfo = $paymentGiftRepository->getPaymentGiftInfo();
         return [
-            'paymentGift' => PaymentGift::all(),
+            'paymentGift' => PaymentGift::with('skin')->get()->all(),
             'settings' => [
                 'realUserPercent' => $paymentGiftInfo->getRealUserPercent(),
                 'hours' => $paymentGiftInfo->getHours(),
@@ -89,10 +89,7 @@ class PaymentGiftListScreen extends Screen
                     ->required()
                     ->title('Количество часов для розыгрыша')
                     ->placeholder('Количество часов для розыгрыша'),
-
-                        Button::make('Сохранить')->method('save')->type(Color::PRIMARY()),
-
-
+                Button::make('Сохранить')->method('save')->type(Color::PRIMARY()),
             ]),
             PaymentGiftListLayout::class,
         ];

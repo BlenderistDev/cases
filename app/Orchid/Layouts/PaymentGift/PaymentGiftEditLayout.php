@@ -16,6 +16,10 @@ use Orchid\Screen\Layouts\Rows;
 
 class PaymentGiftEditLayout extends Rows
 {
+    public function __construct(private array $skins)
+    {
+
+    }
     /**
      * Views.
      *
@@ -34,9 +38,11 @@ class PaymentGiftEditLayout extends Rows
                 ->required()
                 ->title('До')
                 ->placeholder('До'),
+            Select::make('paymentGift.skin_id')
+                ->options($this->skins),
             CheckBox::make('paymentGift.active')
                 ->placeholder('Активность')
-                ->value(1)
+                ->value(1),
         ];
     }
 }
