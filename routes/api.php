@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\LoyaltyController;
+use App\Http\Controllers\OpenCaseController;
 use App\Http\Controllers\PaymentGiftWinnerController;
-use App\Services\SteamInfo\SteamUserInfoService;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSkinController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,26 +31,12 @@ Route::get('/cases', function () {
 
 Route::get('/categories', [CategoriesController::class, 'index']);
 
-Route::get('/payment-gift', [PaymentGiftWinnerController::class, 'index']);
+Route::get('/paymentgift/winner', [PaymentGiftWinnerController::class, 'index']);
 
-Route::post('/case/open', [\App\Http\Controllers\OpenCaseController::class, 'index']);
+Route::post('/user/skin/sell', [UserSkinController::class, 'sell']);
 
-Route::get('/me', function(\App\Services\Cases\Services\OpenCaseService $openCaseService) {
-    $res = $openCaseService->openCase(\App\Models\Cases::find(6));
-    var_dump($res);
-    exit();
-//    (new \App\Services\Market\Request\RubItemsRequest())->makeRequest();
-//    var_dump((new \App\Services\Options\OptionsService())->get('azaza'));
-//    var_dump($paymentGift->raffle(1));
-    var_dump("azaza1");
-    var_dump("azaza2");
-    $skinUpdateService->updateSkins();
-    exit();
+Route::get('/loyalty', [LoyaltyController::class, 'index']);
 
-    $loyalty->afterPurchaseBonus(new \App\Services\Payments\Entities\PaymentInfoEntity("azaza", 1000));
-//    var_dump($loyalty->updatePriceWithLoyalty(100));
+Route::post('/case/open', [OpenCaseController::class, 'index']);
 
-//    var_dump(var_dump(Auth::user()));
-    exit();
-    return $service->getUserInfo('76561198015482493');
-});
+Route::get('/me', [UserController::class, 'index']);

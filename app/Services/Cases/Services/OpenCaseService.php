@@ -8,6 +8,7 @@ use App\Models\Cases;
 use App\Models\CaseWinner;
 use App\Models\Skin;
 use App\Models\User;
+use App\Models\UserSkin;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,13 @@ class OpenCaseService
 
         if (!$winner->save()) {
             throw new \Exception("Не удалось сохранить победителя");
+        }
+
+        $userSkin = new UserSkin();
+        $userSkin->setAttribute('user_id', $userId);
+        $userSkin->setAttribute('skin_id', $skinId);
+        if (!$userSkin->save()) {
+            throw new \Exception("Не удалось сохранить скин для пользователя");
         }
     }
 

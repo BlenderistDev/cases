@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Loyalty\Discounts\PaymentBonus\Entities;
 
-class PaymentBonusEntity
+use JetBrains\PhpStorm\Internal\TentativeType;
+
+class PaymentBonusEntity implements \JsonSerializable
 {
     public function __construct(private string $promocode, private int $value, private int $currentCount, private int $maxCount)
     {
@@ -40,5 +42,16 @@ class PaymentBonusEntity
     public function getMaxCount(): int
     {
         return $this->maxCount;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'promocode' => $this->getPromocode(),
+            'value' => $this->getValue(),
+            'currentCount' => $this->getCurrentCount(),
+            'maxCount' => $this->getMaxCount(),
+        ];
+
     }
 }
