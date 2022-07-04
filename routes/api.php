@@ -31,7 +31,12 @@ Route::get('/categories', [CategoriesController::class, 'index']);
 
 Route::get('/payment-gift', [PaymentGiftWinnerController::class, 'index']);
 
-Route::get('/me', function(\App\Services\SkinUpdate\SkinUpdateService $skinUpdateService) {
+Route::post('/case/open', [\App\Http\Controllers\OpenCaseController::class, 'index']);
+
+Route::get('/me', function(\App\Services\Cases\Services\OpenCaseService $openCaseService) {
+    $res = $openCaseService->openCase(\App\Models\Cases::find(6));
+    var_dump($res);
+    exit();
 //    (new \App\Services\Market\Request\RubItemsRequest())->makeRequest();
 //    var_dump((new \App\Services\Options\OptionsService())->get('azaza'));
 //    var_dump($paymentGift->raffle(1));
