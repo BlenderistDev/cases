@@ -1,0 +1,30 @@
+.App {
+    background-image: url(./Assets/images/bg11.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.container {
+    padding: 0px 10px;
+    width: 1470px;
+    margin: 0 auto;
+}
+
+.container-top {
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 50px;
+}
+
+.LiveContainer {
+    width: 100%;
+    padding: 0px 40px;
+}
+
+[data-disabled="disabled"]{
+    pointer-events: none;
+}
