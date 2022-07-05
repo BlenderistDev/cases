@@ -19,7 +19,8 @@ class User extends Authenticatable
         'permissions',
         'steamid',
         'avatar',
-        'balance'
+        'balance',
+        'steam_trade_link'
     ];
 
     /**
@@ -31,7 +32,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'permissions',
-        'email'
+        'email',
+        'steam_trade_link'
     ];
 
     /**
