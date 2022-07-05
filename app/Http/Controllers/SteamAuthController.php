@@ -99,7 +99,8 @@ class SteamAuthController extends Controller
             'avatar' => $info->avatarfull,
             'steamid' => $info->steamID64,
             'password' => "",
-            'email' => $info->steamID64
+            'email' => $info->steamID64,
+            'balance' => 0
         ]);
     }
 }
