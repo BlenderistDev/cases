@@ -9,8 +9,8 @@ use App\Models\CaseWinner;
 use App\Models\Skin;
 use App\Models\User;
 use App\Models\UserSkin;
+use App\Services\Market\MarketService;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 
 class OpenCaseService

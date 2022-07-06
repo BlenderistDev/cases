@@ -6,6 +6,7 @@ use App\Http\Controllers\OpenCaseController;
 use App\Http\Controllers\PaymentGiftWinnerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSkinController;
+use App\Services\SteamTrades\classes\SteamTrade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,12 @@ Route::get('/paymentgift/winner', [PaymentGiftWinnerController::class, 'index'])
 
 Route::post('/user/skin/sell', [UserSkinController::class, 'sell']);
 
+Route::post('/user/skin/out', [UserSkinController::class, 'out']);
+
 Route::get('/loyalty', [LoyaltyController::class, 'index']);
 
 Route::post('/case/open', [OpenCaseController::class, 'index']);
+
+Route::post('/user/tradelink', [UserController::class, 'setTradeLink']);
 
 Route::get('/me', [UserController::class, 'index']);

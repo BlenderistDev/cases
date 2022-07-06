@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserSkin;
+use App\Services\Market\MarketService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,4 +47,24 @@ class UserSkinController extends Controller
 
         return true;
     }
+
+    public function out(Request $request, MarketService $marketService): bool
+    {
+        if (auth()->guest()) {
+            throw new AuthorizationException();
+        }
+        $userId = auth()->id();
+
+        $skinId = $request->get('id');
+        if (empty($skinId)) {
+            throw new \Exception('no id');
+        }
+        $marketService->buyFor($skinId, $userId);
+
+        return true;
+    }
 }
+
+//175548441
+//dN4rWm18
+
