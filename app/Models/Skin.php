@@ -18,7 +18,7 @@ class Skin extends Model
         'active',
     ];
 
-    protected $appends = ['img'];
+    protected $appends = ['img', 'name', 'rarity'];
 
     public function prices(): HasMany
     {
@@ -29,5 +29,17 @@ class Skin extends Model
     {
         $id = $this->prices()->first()->steam_full_id;
         return "https://steamcommunity-a.akamaihd.net/economy/image/class/730/$id/60fx60f.png";
+    }
+
+    public function getNameAttribute(): string
+    {
+        $price = $this->prices()->first();
+        return empty($price->ru_name) ? $this->market_hash_name : $price->ru_name;
+    }
+
+    public function getRarityAttribute(): string
+    {
+        $price = $this->prices()->first();
+        return (string) $price->ru_rarity;
     }
 }
