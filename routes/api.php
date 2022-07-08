@@ -34,6 +34,8 @@ Route::get('/categories', [CategoriesController::class, 'index']);
 
 Route::get('/paymentgift/winner', [PaymentGiftWinnerController::class, 'index']);
 
+Route::get('/skin/winner', [\App\Http\Controllers\CaseOpenHistoryController::class, 'index']);
+
 Route::post('/user/skin/sell', [UserSkinController::class, 'sell']);
 
 Route::post('/user/skin/out', [UserSkinController::class, 'out']);

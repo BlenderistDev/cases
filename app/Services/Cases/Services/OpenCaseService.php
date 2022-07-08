@@ -15,25 +15,24 @@ use Illuminate\Support\Facades\DB;
 
 class OpenCaseService
 {
-    public function openCase(Cases $case, int $userId): Skin
+    public function openCase(Cases $case, int $userId): UserSkin
     {
         DB::beginTransaction();
 
         try {
             $this->updateUserBalance($userId, $case->price);
             $winnerSkin = $this->getWinnerSkin($case);
-            $this->saveWinner($case->id, $winnerSkin->id, $userId);
+            $userSkin = $this->saveWinner($case->id, $winnerSkin->id, $userId);
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
         DB::commit();
-
-        return $winnerSkin;
+        return $userSkin;
     }
 
-    private function saveWinner(int $caseId, int $skinId, int $userId): void
+    private function saveWinner(int $caseId, int $skinId, int $userId): UserSkin
     {
         $winner = new CaseWinner();
         $winner->setAttribute('user_id', $userId);
@@ -50,6 +49,8 @@ class OpenCaseService
         if (!$userSkin->save()) {
             throw new \Exception("Не удалось сохранить скин для пользователя");
         }
+
+        return $userSkin;
     }
 
     /**

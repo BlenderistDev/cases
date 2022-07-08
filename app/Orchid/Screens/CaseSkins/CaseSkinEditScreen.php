@@ -6,6 +6,7 @@ namespace App\Orchid\Screens\CaseSkins;
 
 use App\Models\Cases;
 use App\Models\Skin;
+use App\Models\UserSkin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Orchid\Screen\Action;
@@ -19,12 +20,15 @@ use Orchid\Support\Facades\Layout;
 
 class CaseSkinEditScreen extends Screen
 {
+    const SKIN_LIMIT = 500;
     /**
      * @var Cases
      */
     public $case;
 
     public $skins;
+
+    public $filters;
 
     /**
      * Query data.
@@ -38,18 +42,20 @@ class CaseSkinEditScreen extends Screen
         $filters = $request->get('filters');
         $nameFilter = $filters['name'] ?? null;
 
-        $options = [];
-        if (!empty($nameFilter)) {
+
             $skins = Skin::query()
                 ->where('market_hash_name', 'LIKE', "%$nameFilter%")
-                ->get()
-                ->all();
+                ->limit(100)
+                ->get();
+//                ->keyBy('id')
+//                ->value('market_hash_name');
 
             foreach ($skins as $skin) {
-                $options[$skin->id] = $skin->market_hash_name . ' - ' . $skin->price;
+//                var_dump($skin->id);
+                $options[(string) $skin->id] = $skin->market_hash_name . ' - ' . $skin->price;
             }
-        }
 
+//            var_dump($options);
         return [
             'case' => $case,
             'skins' => $options,
@@ -128,7 +134,13 @@ class CaseSkinEditScreen extends Screen
             ]),
             Layout::rows([
                 Select::make('skins')
+                    ->empty('Не выбрано', '0')
+                    ->fromQuery(
+                        Skin::where('market_hash_name', 'LIKE', $this->filters['name'] ?? ''),
+                        'market_hash_name'
+                    )
                     ->options($this->skins)
+                    ->multiple()
             ]),
         ];
     }

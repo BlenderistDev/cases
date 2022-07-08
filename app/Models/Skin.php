@@ -18,7 +18,7 @@ class Skin extends Model
         'active',
     ];
 
-    protected $appends = ['img', 'name', 'rarity'];
+    protected $appends = ['img', 'name', 'rarity', 'short_name'];
 
     public function prices(): HasMany
     {
@@ -41,5 +41,10 @@ class Skin extends Model
     {
         $price = $this->prices()->first();
         return (string) $price->ru_rarity;
+    }
+
+    public function getShortNameAttribute(): string
+    {
+        return preg_replace('/.?\(.*\)/', '', $this->name);
     }
 }

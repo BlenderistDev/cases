@@ -30,6 +30,9 @@ class UserController extends Controller
         }
 
         $tradeLink = $request->get('link');
+        if (empty($tradeLink)) {
+            throw new \Exception("no trade link");
+        }
         $this->validateTradeLink($tradeLink);
 
         /** @var User $user */
