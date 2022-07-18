@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return file_get_contents(public_path() . '/index.html');
-});
-
 Route::get('auth/steam', [SteamAuthController::class, 'redirectToSteam'])->name('auth.steam');
 Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('auth.steam.handle');
 
@@ -26,3 +22,7 @@ Route::get('/me', function () {
 });
 
 Route::get('logout', [SteamAuthController::class, 'logout'])->name('logout');
+
+Route::any('/{default?}', function () {
+    return file_get_contents(public_path() . '/index.html');
+});
