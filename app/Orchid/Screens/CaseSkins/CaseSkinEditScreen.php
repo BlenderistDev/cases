@@ -45,13 +45,10 @@ class CaseSkinEditScreen extends Screen
 
             $skins = Skin::query()
                 ->where('market_hash_name', 'LIKE', "%$nameFilter%")
-                ->limit(100)
+                ->limit(1000)
                 ->get();
-//                ->keyBy('id')
-//                ->value('market_hash_name');
 
             foreach ($skins as $skin) {
-//                var_dump($skin->id);
                 $options[(string) $skin->id] = $skin->market_hash_name . ' - ' . $skin->price;
             }
 

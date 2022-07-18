@@ -95,6 +95,10 @@ class CaseSkinsListScreen extends Screen
             }
         }
 
+        if (count($skins) !== count(array_unique($skins))) {
+            Alert::error(sprintf('Необходимо удалить повторяющиеся скины'));
+        }
+
         $percentExpectedSum = 100000;
         if (array_sum($skins) === $percentExpectedSum) {
             foreach ($skins as $id => $percent) {
