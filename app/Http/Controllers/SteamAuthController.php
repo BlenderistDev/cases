@@ -26,7 +26,7 @@ class SteamAuthController extends Controller
      *
      * @var string
      */
-    protected $redirectURL = '/me';
+    protected $redirectURL = '/';
 
 
     /**
