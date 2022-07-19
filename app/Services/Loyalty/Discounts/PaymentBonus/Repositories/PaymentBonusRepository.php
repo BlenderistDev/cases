@@ -21,7 +21,7 @@ class PaymentBonusRepository
     public function getPaymentBonusInfo(): PaymentBonusEntity
     {
         $value = (int) $this->optionsService->get(self::PROMOCODE_VALUE_OPTION_NAME);;
-        $promocode = $this->optionsService->get(self::PROMOCODE_OPTION_NAME);
+        $promocode = (string) $this->optionsService->get(self::PROMOCODE_OPTION_NAME);
         $currentCount = (int) $this->optionsService->get(self::CURRENT_COUNT_OPTION_NAME);
         $maxCount = (int) $this->optionsService->get(self::MAX_COUNT_OPTION_NAME);
 
