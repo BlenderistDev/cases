@@ -8,6 +8,7 @@ use App\Models\Categories;
 use Orchid\Platform\Models\Role;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Field;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Picture;
 use Orchid\Screen\Fields\Select;
@@ -35,12 +36,9 @@ class CaseEditLayout extends Rows
                 ->required()
                 ->title('Стоимость')
                 ->placeholder('Стоимость'),
-
-            Picture::make('case.img')
-                ->required()
-                ->title('Картинка')
-                ->placeholder('Картинка'),
-
+            Cropper::make('case.img')
+                ->width(500)
+                ->height(500),
             Select::make('case.categories.')
                 ->fromModel(Categories::class, 'name')
                 ->multiple()
