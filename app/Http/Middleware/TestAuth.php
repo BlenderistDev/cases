@@ -17,7 +17,7 @@ class TestAuth
     public function handle(Request $request, Closure $next)
     {
         if ($request->header('front')) {
-            auth()->loginUsingId(6);
+            auth()->loginUsingId(4);
         }
         return $next($request);
     }
