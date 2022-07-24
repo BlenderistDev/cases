@@ -95,7 +95,9 @@ class CaseSkinsListScreen extends Screen
             }
         }
 
-        if (count($skins) !== count(array_unique($skins))) {
+        $skinIdList = array_keys($skins);
+
+        if (count($skinIdList) !== count(array_unique($skinIdList))) {
             Alert::error(sprintf('Необходимо удалить повторяющиеся скины'));
         }
 
