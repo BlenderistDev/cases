@@ -48,6 +48,9 @@ class PlatformProvider extends OrchidServiceProvider
                         Menu::make('Фейковые пользователи')
                             ->icon('monitor')
                             ->route('platform.dummy'),
+                        Menu::make('Лайв лента')
+                            ->icon('monitor')
+                            ->route('platform.liveWinners'),
                     ]
                 ),
 

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cases;
-use App\Services\Cases\Services\OpenCaseService;
+use App\Services\Cases\Services\OpenUserCaseService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class OpenCaseController extends Controller
 {
-    public function index(OpenCaseService $openCaseService, Request $request): string
+    public function index(OpenUserCaseService $openCaseService, Request $request): string
     {
         $userId = auth()->id();
 
