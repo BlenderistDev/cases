@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static Builder byRarity(array $rarity)
+ */
 class Skin extends Model
 {
     use HasFactory;
@@ -46,5 +50,14 @@ class Skin extends Model
     public function getShortNameAttribute(): string
     {
         return preg_replace('/.?\(.*\)/', '', $this->name);
+    }
+
+    public function scopeByRarity($query, array $rarity)
+    {
+        $filter = function ($q) use ($rarity) {
+            $q->whereIn('ru_rarity', $rarity);
+        };
+
+        return $query->whereHas('prices', $filter)->with(['prices' => $filter]);
     }
 }

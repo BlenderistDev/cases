@@ -6,6 +6,7 @@ namespace App\Orchid\Screens\CaseSkins;
 
 use App\Models\Cases;
 use App\Models\Skin;
+use App\Models\SkinPrice;
 use App\Models\UserSkin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ use Orchid\Support\Facades\Layout;
 
 class CaseSkinEditScreen extends Screen
 {
-    const SKIN_LIMIT = 500;
+    private const SKIN_LIMIT = 1000;
     /**
      * @var Cases
      */
@@ -29,6 +30,8 @@ class CaseSkinEditScreen extends Screen
     public $skins;
 
     public $filters;
+
+    public $rarityList;
 
     /**
      * Query data.
@@ -41,22 +44,51 @@ class CaseSkinEditScreen extends Screen
     {
         $filters = $request->get('filters');
         $nameFilter = $filters['name'] ?? null;
+        $priceFromFilter = $filters['priceFrom'] ?? null;
+        $priceToFilter = $filters['priceTo'] ?? null;
+        $rarityFilter = $filters['rarity'] ?? [];
+
+        if ($rarityFilter) {
+            $query = Skin::byRarity($rarityFilter);
+        } else {
+            $query = Skin::query();
+        }
+
+        $query
+            ->where('market_hash_name', 'LIKE', "%$nameFilter%")
+            ->limit(self::SKIN_LIMIT);
+
+        if ($priceFromFilter) {
+            $query
+                ->where('price', '>=', (int) $priceFromFilter);
+        }
+
+        if ($priceToFilter) {
+            $query
+                ->where('price', '<=', (int) $priceToFilter);
+        }
 
 
-            $skins = Skin::query()
-                ->where('market_hash_name', 'LIKE', "%$nameFilter%")
-                ->limit(1000)
-                ->get();
+        $skins = $query->get();
 
-            foreach ($skins as $skin) {
-                $options[(string) $skin->id] = $skin->market_hash_name . ' - ' . $skin->price;
-            }
+        foreach ($skins as $skin) {
+            $options[(string) $skin->id] = $skin->market_hash_name . ' - ' . $skin->price;
+        }
 
-//            var_dump($options);
+        $rarityList = SkinPrice::query()
+            ->distinct()
+            ->select('ru_rarity')
+            ->get()
+            ->reduce(function($res, $val) {
+                $res[$val['ru_rarity']] = $val['ru_rarity'];
+                return $res;
+            }, []);
+
         return [
             'case' => $case,
-            'skins' => $options,
+            'skins' => $options ?? [],
             'filters' => $filters,
+            'rarityList' => $rarityList
         ];
     }
 
@@ -116,6 +148,19 @@ class CaseSkinEditScreen extends Screen
                         [
                             Input::make('filters.name')
                                 ->title('Имя')
+                                ->style('width:200px'),
+                            Input::make('filters.priceFrom')
+                                ->type('number')
+                                ->title('Цена от')
+                                ->style('width:200px'),
+                            Input::make('filters.priceTo')
+                                ->type('number')
+                                ->title('Цена до')
+                                ->style('width:200px'),
+                            Select::make('filters.rarity')
+                                ->title('Редкость')
+                                ->multiple()
+                                ->options($this->rarityList)
                                 ->style('width:200px'),
                         ]
                     )
