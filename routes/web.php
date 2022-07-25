@@ -22,7 +22,3 @@ Route::get('/me', function () {
 });
 
 Route::get('logout', [SteamAuthController::class, 'logout'])->name('logout');
-
-Route::any('/{default?}', function () {
-    return file_get_contents(public_path() . '/index.html');
-});

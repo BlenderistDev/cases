@@ -40,6 +40,7 @@ class Handler extends ExceptionHandler
      * Register the exception handling callbacks for the application.
      *
      * @return void
+     * @return void
      */
     public function register()
     {
@@ -50,6 +51,12 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        if ($this->isHttpException($exception)) {
+            if ($exception->getStatusCode() === 404) {
+                return response()->make(file_get_contents(public_path() . '/index.html'));
+            }
+        }
+
         return response()->json(['error' => $exception->getMessage()]);
     }
 }
