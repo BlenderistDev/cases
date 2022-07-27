@@ -17,6 +17,10 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\FreeCases\FreeCaseEditScreen;
+use App\Orchid\Screens\FreeCases\FreeCasesListScreen;
+use App\Orchid\Screens\FreeCaseSkins\FreeCaseSkinEditScreen;
+use App\Orchid\Screens\FreeCaseSkins\FreeCaseSkinsListScreen;
 use App\Orchid\Screens\Loyalty\LoyaltyScreen;
 use App\Orchid\Screens\PaymentGift\PaymentGiftEditScreen;
 use App\Orchid\Screens\PaymentGift\PaymentGiftListScreen;
@@ -63,10 +67,25 @@ Route::screen('cases/{case}/edit', CaseEditScreen::class)
     ->name('platform.systems.cases.edit');
 
 Route::screen('cases/{case}/skins/list', CaseSkinsListScreen::class)
-    ->name('platform.systems.case.skins.list');
+    ->name('platform.systems.cases.skins.list');
 
 Route::screen('cases/{case}/skins/edit', CaseSkinEditScreen::class)
-    ->name('platform.systems.case.skins.edit');
+    ->name('platform.systems.cases.skins.edit');
+
+Route::screen('freeCases', FreeCasesListScreen::class)
+    ->name('platform.freeCases');
+
+Route::screen('freeCases/create', FreeCaseEditScreen::class)
+    ->name('platform.systems.freeCases.create');
+
+Route::screen('freeCases/{freeCase}/edit', FreeCaseEditScreen::class)
+    ->name('platform.systems.freeCases.edit');
+
+Route::screen('freeCases/{freeCase}/skins/list', FreeCaseSkinsListScreen::class)
+    ->name('platform.systems.freeCases.skins.list');
+
+Route::screen('freeCases/{case}/skins/edit', FreeCaseSkinEditScreen::class)
+    ->name('platform.systems.freeCases.skins.edit');
 
 Route::screen('categories', CategoriesListScreen::class)
     ->name('platform.categories');

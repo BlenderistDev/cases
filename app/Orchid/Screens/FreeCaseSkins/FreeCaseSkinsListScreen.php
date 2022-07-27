@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Orchid\Screens\CaseSkins;
+namespace App\Orchid\Screens\FreeCaseSkins;
 
 use App\Models\Cases;
+use App\Models\FreeCases;
 use App\Orchid\Layouts\CaseSkins\CaseSkinsListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Action;
@@ -14,16 +15,16 @@ use Orchid\Support\Color;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
-class CaseSkinsListScreen extends Screen
+class FreeCaseSkinsListScreen extends Screen
 {
     /**
      * @var Cases
      */
     public $case;
 
-    public function query(Cases $case): iterable
+    public function query(FreeCases $freeCase): iterable
     {
-        $skins = $case
+        $skins = $freeCase
             ->skins()
             ->withPivot('percent')
             ->get()
@@ -31,7 +32,7 @@ class CaseSkinsListScreen extends Screen
 
         return [
             'skins' => $skins,
-            'case' => $case
+            'case' => $freeCase
         ];
     }
 
@@ -55,15 +56,15 @@ class CaseSkinsListScreen extends Screen
         return [
             Link::make('Добавить')
                 ->icon('plus')
-                ->route('platform.systems.cases.skins.edit', $this->case->id),
+                ->route('platform.systems.freeCases.skins.edit', $this->case->id),
         ];
     }
 
-    public function delete(Cases $case, Request $request)
+    public function delete(FreeCases $freeCase, Request $request)
     {
-        $case->skins()->detach($request->get('id'));
+        $freeCase->skins()->detach($request->get('id'));
 
-        return redirect()->route('platform.systems.cases.skins.list', $case->id);
+        return redirect()->route('platform.systems.freeCases.skins.list', $freeCase->id);
     }
 
     /**
@@ -85,7 +86,7 @@ class CaseSkinsListScreen extends Screen
         ];
     }
 
-    public function save(Cases $case, Request $request)
+    public function save(FreeCases $freeCase, Request $request)
     {
         $skins = [];
         foreach ($request->toArray() as $key => $value) {
@@ -104,10 +105,10 @@ class CaseSkinsListScreen extends Screen
         $percentExpectedSum = 100000;
         if (array_sum($skins) === $percentExpectedSum) {
             foreach ($skins as $id => $percent) {
-                $case->skins()->updateExistingPivot($id, ['percent' => $percent]);
+                $freeCase->skins()->updateExistingPivot($id, ['percent' => $percent]);
             }
 
-            return redirect()->route('platform.systems.cases.skins.list', $case->id);
+            return redirect()->route('platform.systems.freeCases.skins.list', $freeCase->id);
         } else {
             Alert::error(sprintf('Необходимо, чтобы сумма процентов была %d, текущая %d', $percentExpectedSum, array_sum($skins)));
         }

@@ -6,6 +6,7 @@ use App\Http\Controllers\OpenCaseController;
 use App\Http\Controllers\PaymentGiftWinnerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSkinController;
+use App\Services\Cases\Services\OpenDummyCaseService;
 use App\Services\SteamTrades\classes\SteamTrade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,8 @@ Route::get('/cases', function () {
     var_dump("azaza");
 });
 
+Route::get('/freecase', [\App\Http\Controllers\FreeCasesController::class, 'index']);
+Route::post('/freecase/open', [\App\Http\Controllers\FreeCasesController::class, 'open']);
 
 Route::get('/categories', [CategoriesController::class, 'index']);
 

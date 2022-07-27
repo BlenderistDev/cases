@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         '/api/case/open',
         '/api/user/skin/sell',
         '/api/user/tradelink',
-        '/api/user/skin/out'
+        '/api/user/skin/out',
+        '/api/freecase/open',
     ];
 }

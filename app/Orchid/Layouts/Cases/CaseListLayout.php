@@ -12,6 +12,10 @@ use Orchid\Screen\TD;
 
 class CaseListLayout extends Table
 {
+    public function __construct(private string $paramName)
+    {
+    }
+
     /**
      * Data source.
      *
@@ -30,7 +34,7 @@ class CaseListLayout extends Table
         return [
             TD::make('img', 'Картинка')
                 ->width('150')
-                ->render(function (Cases $case) {
+                ->render(function ($case) {
                     // Please use view('path')
                     return "<img src='{$case->img}'
                               alt='sample'
@@ -39,30 +43,30 @@ class CaseListLayout extends Table
             TD::make('name', 'Имя')
                 ->width(100)
                 ->render(
-                    fn (Cases $item): string => $item->name
+                    fn ($item): string => $item->name
                 ),
             TD::make('price', 'Стоимость')
                 ->width(100)
                 ->render(
-                    fn (Cases $item): int => $item->price
+                    fn ($item): int => $item->price
                 ),
             TD::make('delete')
-                ->render(function (Cases $case) {
+                ->render(function ($case) {
                     return Button::make('delete')
                         ->method('delete', [
                             'id' => $case->id,
                         ]);
                 }),
             TD::make('edit')
-                ->render(function (Cases $case) {
+                ->render(function ($case) {
                     return Link::make(__('Edit'))
-                        ->route('platform.systems.cases.edit', $case->id)
+                        ->route('platform.systems.' . $this->paramName . '.edit', $case->id)
                         ->icon('pencil');
                 }),
             TD::make('edit_skins', 'скины')
-                ->render(function (Cases $case) {
+                ->render(function ($case) {
                     return Link::make(__('Edit'))
-                        ->route('platform.systems.case.skins.list', $case->id)
+                        ->route('platform.systems.' . $this->paramName . '.skins.list', $case->id)
                         ->icon('pencil');
                 })
         ];

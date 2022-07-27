@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Orchid\Screens\Cases;
+namespace App\Orchid\Screens\FreeCases;
 
-use App\Models\Cases;
-use App\Models\Categories;
+use App\Models\FreeCases;
 use App\Orchid\Layouts\Cases\CaseEditLayout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,25 +14,23 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 
-class CaseEditScreen extends Screen
+class FreeCaseEditScreen extends Screen
 {
     /**
-     * @var Cases
+     * @var FreeCases
      */
     public $case;
 
     /**
      * Query data.
      *
-     * @param Cases $case
+     * @param FreeCases $freeCases
      * @return array
      */
-    public function query(Cases $case): iterable
+    public function query(FreeCases $freeCases): iterable
     {
-        $case->load('categories');
         return [
-            'case' => $case,
-            'categories' => Categories::all()
+            'case' => $freeCases,
         ];
     }
 
@@ -44,7 +41,7 @@ class CaseEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->case->exists ? 'Редактировать кейс' : 'Создать кейс';
+        return $this->case->exists ? 'Редактировать бесплатный кейс' : 'Создать бесплатный кейс';
     }
 
     /**
@@ -54,7 +51,7 @@ class CaseEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Редактирование кейса';
+        return 'Редактирование бесплатного кейса';
     }
 
     /**
@@ -75,8 +72,6 @@ class CaseEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-
-
             Button::make(__('Save'))
                 ->icon('check')
                 ->method('save'),
@@ -90,9 +85,9 @@ class CaseEditScreen extends Screen
     {
         return [
 
-            Layout::block(new CaseEditLayout(true))
+            Layout::block(new CaseEditLayout(false))
                 ->title(__('Общая информация'))
-                ->description(__('Общая инфромация о кейсе'))
+                ->description(__('Общая инфромация о бесплатном кейсе'))
                 ->commands(
                     Button::make(__('Save'))
                         ->type(Color::DEFAULT())
@@ -103,21 +98,19 @@ class CaseEditScreen extends Screen
     }
 
     /**
-     * @param Cases $case
+     * @param FreeCases $freeCases
      * @param Request $request
      *
      * @return RedirectResponse
      */
-    public function save(Cases $case, Request $request): RedirectResponse
+    public function save(FreeCases $freeCases, Request $request): RedirectResponse
     {
         $data = $request->get('case');
-        $case->setAttribute('name', $data['name']);
-        $case->setAttribute('price', $data['price']);
-        $case->setAttribute('img', $data['img']);
-        $case->save();
-        $case->categories()->detach();
-        $case->categories()->attach($data['categories']);
+        $freeCases->setAttribute('name', $data['name']);
+        $freeCases->setAttribute('price', $data['price']);
+        $freeCases->setAttribute('img', $data['img']);
+        $freeCases->save();
 
-        return redirect()->route('platform.cases');
+        return redirect()->route('platform.freeCases');
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Orchid\Screens\Cases;
+namespace App\Orchid\Screens\FreeCases;
 
 use App\Models\Cases;
+use App\Models\FreeCases;
 use App\Orchid\Layouts\Cases\CaseListLayout;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
@@ -12,12 +13,12 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 
-class CasesListScreen extends Screen
+class FreeCasesListScreen extends Screen
 {
     public function query(): iterable
     {
         return [
-            'cases' => Cases::all()
+            'cases' => FreeCases::all()
         ];
     }
 
@@ -28,7 +29,7 @@ class CasesListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Кейсы';
+        return 'Бесплатные кейсы';
     }
 
     /**
@@ -41,14 +42,14 @@ class CasesListScreen extends Screen
         return [
             Link::make('Добавить')
                 ->icon('plus')
-                ->route('platform.systems.cases.create'),
+                ->route('platform.systems.freeCases.create'),
         ];
     }
 
-    public function delete(Cases $case)
+    public function delete(FreeCases $freeCases)
     {
-        $case->delete();
-        redirect()->route('platform.cases');
+        $freeCases->delete();
+        redirect()->route('platform.freeCases');
     }
 
     /**
@@ -59,7 +60,7 @@ class CasesListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            new CaseListLayout('cases'),
+            new CaseListLayout('freeCases'),
         ];
     }
 }

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Orchid\Screens\CaseSkins;
+namespace App\Orchid\Screens\FreeCaseSkins;
 
-use App\Models\Cases;
+use App\Models\FreeCases;
+use App\Models\Skin;
 use App\Orchid\Layouts\CaseSkins\CaseSkinFilterLayout;
 use App\Orchid\Layouts\CaseSkins\CaseSkinSelectLayout;
 use Illuminate\Http\RedirectResponse;
@@ -16,10 +17,10 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 
-class CaseSkinEditScreen extends Screen
+class FreeCaseSkinEditScreen extends Screen
 {
     /**
-     * @var Cases
+     * @var FreeCases
      */
     public $case;
 
@@ -28,16 +29,16 @@ class CaseSkinEditScreen extends Screen
     /**
      * Query data.
      *
-     * @param Cases $case
+     * @param FreeCases $freeCase
      * @param Request $request
      * @return array
      */
-    public function query(Cases $case, Request $request): iterable
+    public function query(FreeCases $freeCase, Request $request): iterable
     {
-        $filters = $request->get('filters');
+        $filters = $request->get('filters', []);
 
         return [
-            'case' => $case,
+            'case' => $freeCase,
             'filters' => $filters,
         ];
     }
@@ -49,7 +50,7 @@ class CaseSkinEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Добавить скин к кейсу';
+        return 'Добавить скин к бесплатному кейсу';
     }
 
     /**
@@ -59,7 +60,7 @@ class CaseSkinEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Добавление скин к кейсу';
+        return 'Добавление скин к бесплатному кейсу';
     }
 
     /**
@@ -107,20 +108,21 @@ class CaseSkinEditScreen extends Screen
                 (int) ($this->filters['priceTo'] ?? 0),
                 $this->filters['rarity'] ?? []
             )]),
+
         ];
     }
 
     /**
      * @param Request $request
-     * @param Cases $case
+     * @param FreeCases $case
      * @return RedirectResponse
      */
-    public function applyFilters(Request $request, Cases $case): RedirectResponse
+    public function applyFilters(Request $request, FreeCases $case): RedirectResponse
     {
         $filters = $request->get('filters');
 
         return redirect()->route(
-            'platform.systems.cases.skins.edit',
+            'platform.systems.freeCases.skins.edit',
             [
                 'filters' => $filters,
                 'case' => $case->id
@@ -128,26 +130,26 @@ class CaseSkinEditScreen extends Screen
     }
 
     /**
-     * @param Cases $case
+     * @param FreeCases $case
      * @return RedirectResponse
      */
-    public function resetFilters(Cases $case): RedirectResponse
+    public function resetFilters(FreeCases $case): RedirectResponse
     {
-        return redirect()->route('platform.systems.cases.skins.edit', $case->id);
+        return redirect()->route('platform.systems.freeCases.skins.edit', $case->id);
     }
 
     /**
-     * @param Cases $case
+     * @param FreeCases $case
      * @param Request $request
      *
      * @return RedirectResponse
      */
-    public function save(Cases $case, Request $request): RedirectResponse
+    public function save(FreeCases $case, Request $request): RedirectResponse
     {
         $case->skins()->attach($request->get('skins'), [
             'percent' => 0
         ]);
 
-        return redirect()->route('platform.systems.cases.skins.list', $case->id);
+        return redirect()->route('platform.systems.freeCases.skins.list', $case->id);
     }
 }

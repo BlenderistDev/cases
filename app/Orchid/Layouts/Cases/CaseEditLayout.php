@@ -16,6 +16,10 @@ use Orchid\Screen\Layouts\Rows;
 
 class CaseEditLayout extends Rows
 {
+    public function __construct(private bool $isShowCategories)
+    {
+    }
+
     /**
      * Views.
      *
@@ -23,7 +27,7 @@ class CaseEditLayout extends Rows
      */
     public function fields(): array
     {
-        return [
+        $fields = [
             Input::make('case.name')
                 ->type('text')
                 ->max(255)
@@ -39,11 +43,16 @@ class CaseEditLayout extends Rows
             Cropper::make('case.img')
                 ->width(500)
                 ->height(500),
-            Select::make('case.categories.')
+        ];
+
+        if ($this->isShowCategories) {
+            $fields[] = Select::make('case.categories.')
                 ->fromModel(Categories::class, 'name')
                 ->multiple()
                 ->title(__('Новая категория'))
-                ->help('Specify which groups this account should belong to'),
-        ];
+                ->help('Specify which groups this account should belong to');
+        }
+
+        return $fields;
     }
 }
