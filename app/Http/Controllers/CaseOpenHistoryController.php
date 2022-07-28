@@ -13,12 +13,22 @@ class CaseOpenHistoryController extends Controller
     public function index(Request $request)
     {
         $limit = $request->get('limit', self::DEFAULT_SKIN_COUNT);
+        $fromId = $request->get('from', 0);
 
-        return CaseWinner::query()
+        $items = CaseWinner::query()
             ->orderByDesc('created_at')
             ->limit($limit)
             ->with('skin')
-            ->get()
-            ->map(fn (CaseWinner $casesSkin): Skin => $casesSkin->skin);
+            ->where('id', '>', $fromId)
+            ->get();
+
+        if ($items->isNotEmpty()) {
+            $lastId = $items->first()->id;
+        }
+
+        return [
+            'items' => $items->map(fn (CaseWinner $casesSkin): Skin => $casesSkin->skin),
+            'lastId' => $lastId ?? 0,
+        ];
     }
 }
