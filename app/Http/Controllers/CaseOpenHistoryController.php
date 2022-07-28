@@ -24,6 +24,14 @@ class CaseOpenHistoryController extends Controller
 
         if ($items->isNotEmpty()) {
             $lastId = $items->first()->id;
+        } else {
+            $lastId = CaseWinner::query()
+                ->orderByDesc('created_at')
+                ->limit(1)
+                ->get()
+                ->first()
+                ->id;
+
         }
 
         return [
