@@ -3,6 +3,8 @@
 namespace App\Console;
 
 use App\Services\Cases\Services\OpenDummyCaseService;
+use App\Services\Loyalty\Discounts\PaymentGift\PaymentGift;
+use App\Services\Loyalty\Discounts\PaymentGift\Repositories\PaymentGiftRepository;
 use App\Services\Options\OptionsService;
 use App\Services\SkinUpdate\SkinUpdateService;
 use Illuminate\Console\Scheduling\Schedule;
@@ -39,6 +41,23 @@ class Kernel extends ConsoleKernel
         })
             ->everyMinute()
             ->name('fake case open');
+
+        /** @var PaymentGiftRepository $paymentGiftRepository */
+        $paymentGiftRepository = $this->app->get(PaymentGiftRepository::class);
+        $paymentGiftHours = $paymentGiftRepository
+            ->getPaymentGiftInfo()
+            ->getHours();
+
+        if ($paymentGiftHours) {
+            $schedule->call(function (PaymentGift $paymentGiftService) {
+                $paymentGiftList = \App\Models\PaymentGift::all();
+                foreach ($paymentGiftList as $paymentGift) {
+                    $paymentGiftService->raffle($paymentGift->id);
+                }
+            })
+                ->cron("0 */$paymentGiftHours 0 0 0")
+                ->name('payment gift raffle');
+        }
     }
 
     /**
