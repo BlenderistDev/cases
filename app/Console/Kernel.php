@@ -55,7 +55,7 @@ class Kernel extends ConsoleKernel
                     $paymentGiftService->raffle($paymentGift->id);
                 }
             })
-                ->cron("0 */$paymentGiftHours 0 0 0")
+                ->cron("0 */$paymentGiftHours * * *")
                 ->name('payment gift raffle');
         }
     }
