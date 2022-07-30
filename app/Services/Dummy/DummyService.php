@@ -16,7 +16,7 @@ class DummyService
      */
     public function getDummies(int $count, bool $unique = false): array
     {
-        $dummyList = Dummy::all()->random($count);
+        $dummyList = Dummy::query()->limit($count)->inRandomOrder()->get();
 
         if (!$unique) {
             while (count($dummyList) < $count) {
