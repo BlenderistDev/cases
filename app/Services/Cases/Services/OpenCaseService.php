@@ -40,4 +40,27 @@ class OpenCaseService
 
         return $skins[$winnerSkinId];
     }
+
+    public function testCaseOpen(Cases $case): float
+    {
+        $skins = $case
+            ->skins()
+            ->withPivot('percent')
+            ->get();
+
+        $openSum = 0;
+        $caseSum = 0;
+
+        foreach ($skins as $skin) {
+            $percent = $skin->pivot->percent;
+            $openSum += $case->price * $percent;
+            $caseSum += $skin->price * $percent;
+        }
+
+        if ($caseSum > 0) {
+            return $openSum / $caseSum;
+        }
+
+        return 0;
+    }
 }

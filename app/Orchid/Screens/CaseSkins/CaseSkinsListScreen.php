@@ -4,11 +4,13 @@ namespace App\Orchid\Screens\CaseSkins;
 
 use App\Models\Cases;
 use App\Orchid\Layouts\CaseSkins\CaseSkinsListLayout;
+use App\Services\Cases\Services\OpenCaseService;
 use Illuminate\Http\Request;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Label;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Alert;
@@ -21,7 +23,9 @@ class CaseSkinsListScreen extends Screen
      */
     public $case;
 
-    public function query(Cases $case): iterable
+    public $profitability;
+
+    public function query(Cases $case, OpenCaseService $openCaseService): iterable
     {
         $skins = $case
             ->skins()
@@ -29,9 +33,12 @@ class CaseSkinsListScreen extends Screen
             ->get()
             ->all();
 
+        $profitability = $openCaseService->testCaseOpen($case);
+
         return [
             'skins' => $skins,
-            'case' => $case
+            'case' => $case,
+            'profitability' => $profitability
         ];
     }
 
@@ -74,6 +81,10 @@ class CaseSkinsListScreen extends Screen
     public function layout(): iterable
     {
         return [
+            Layout::rows([
+                Label::make('Выгодность')
+                    ->title('Выгодность: ' . $this->profitability),
+            ]),
             CaseSkinsListLayout::class,
             Layout::rows([
                 Group::make(
