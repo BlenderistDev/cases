@@ -7,6 +7,7 @@ namespace App\Services\Market\Request;
 use App\Models\SkinOutLog;
 use App\Models\User;
 use App\Models\UserSkin;
+use App\Services\Market\Logger\Logger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -15,7 +16,10 @@ class BuyForRequest
 {
     const API_V_2_BUY_FOR = '/api/v2/buy-for';
 
-    public function makeRequest(int $skinId, $userId)
+    public function __construct(private Logger $logger)
+    {
+    }
+    public function makeRequest(int $skinId, int $userId)
     {
         $host = getenv('MARKET_URL');
         $marketKey = getenv('MARKET_KEY');
@@ -49,8 +53,10 @@ class BuyForRequest
         ];
 
         try {
-            $response = Http::get($host . self::API_V_2_BUY_FOR, $requestData);
+            $url = $host . self::API_V_2_BUY_FOR;
+            $response = Http::get($url, $requestData);
 
+            $this->logger->log($userId, $url, $requestData, $response);
 
             if ($response->status() !== 200 || empty($response->json()['success']) || $response->json()['success'] !== true) {
                 throw new \Exception('Ошибка при покупке скина');
