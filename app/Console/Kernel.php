@@ -34,12 +34,22 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function (OpenDummyCaseService $openDummyCaseService, OptionsService $optionsService) {
             $chance = (int) $optionsService->get('fake_case_open_chance');
-            $rand = rand(0, $chance);
-            if ($rand === $chance) {
-                $openDummyCaseService->openCase();
+
+            $start = microtime(true);
+            $i = 0;
+
+            while (microtime(true) - $start < 59) {
+                if ((microtime(true) - $start) > $i) {
+                    $rand = rand(0, $chance);
+                    if ($rand === $chance) {
+                        $openDummyCaseService->openCase();
+                    }
+                    $i++;
+                }
             }
+
         })
-            ->everyMinute()
+            ->cron('* * * * *')
             ->name('fake case open');
 
         /** @var PaymentGiftRepository $paymentGiftRepository */
