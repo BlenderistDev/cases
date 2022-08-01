@@ -6,6 +6,7 @@ namespace App\Services\Cases\Services;
 
 use App\Models\Cases;
 use App\Models\Skin;
+use App\Services\Cases\Exceptions\NoSkinsException;
 use Exception;
 
 class OpenCaseService
@@ -33,7 +34,7 @@ class OpenCaseService
         }
 
         if (empty($participants)) {
-            throw new Exception("Для кейса не найдены скины");
+            throw new NoSkinsException("Для кейса не найдены скины");
         }
 
         $winnerSkinId = $participants[array_rand($participants)];

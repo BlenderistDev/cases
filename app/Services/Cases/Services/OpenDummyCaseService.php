@@ -6,6 +6,7 @@ namespace App\Services\Cases\Services;
 
 use App\Models\Cases;
 use App\Models\CaseWinner;
+use App\Services\Cases\Exceptions\NoSkinsException;
 use App\Services\Dummy\DummyService;
 
 class OpenDummyCaseService
@@ -25,7 +26,11 @@ class OpenDummyCaseService
             throw new \Exception("no dummy");
         }
 
-        $winnerSkin = $this->openCaseService->getWinnerSkin($case);
+        try {
+            $winnerSkin = $this->openCaseService->getWinnerSkin($case);
+        } catch (NoSkinsException $e) {
+            $this->openCase();
+        }
 
         return $this->saveWinner($case->id, $winnerSkin->id, $dummy[0]->id);
     }
