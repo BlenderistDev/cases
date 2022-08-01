@@ -29,7 +29,7 @@ class OpenDummyCaseService
         try {
             $winnerSkin = $this->openCaseService->getWinnerSkin($case);
         } catch (NoSkinsException $e) {
-            $this->openCase();
+            return $this->openCase();
         }
 
         return $this->saveWinner($case->id, $winnerSkin->id, $dummy[0]->id);
