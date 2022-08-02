@@ -51,12 +51,17 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        $code = 500;
+
+        if (strpos('/api/', $request->url()) !== false) {
+            $code = 200;
+        }
         if ($this->isHttpException($exception)) {
             if ($exception->getStatusCode() === 404) {
                 return response()->make(file_get_contents(public_path() . '/index.html'));
             }
         }
 
-        return response()->json(['error' => $exception->getMessage()]);
+        return response()->json(['error' => $exception->getMessage()], $code);
     }
 }
