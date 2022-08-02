@@ -114,6 +114,10 @@ Route::screen('paymentGift/create', PaymentGiftEditScreen::class)
 Route::screen('liveWinners', \App\Orchid\Screens\LiveWinners\LiveWinnersScreen::class)
     ->name('platform.liveWinners');
 
+Route::screen('caseStatistics', \App\Orchid\Screens\CaseStatistics\CaseStatisticsScreen::class)
+    ->name('platform.caseStatistics');
+
+
 Route::screen('paymentGift/{paymentGift}/edit', PaymentGiftEditScreen::class)
     ->name('platform.systems.paymentGift.edit');
 

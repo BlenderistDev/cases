@@ -61,6 +61,9 @@ class PlatformProvider extends OrchidServiceProvider
                         Menu::make('Лайв лента')
                             ->icon('monitor')
                             ->route('platform.liveWinners'),
+                        Menu::make('Статистика кейсов')
+                            ->icon('monitor')
+                            ->route('platform.caseStatistics'),
                     ]
                 ),
             Menu::make(__('Users'))
