@@ -19,7 +19,8 @@ class Loyalty
     {
         $newPrice = $paymentInfoEntity->getAmount();
         foreach ($this->purchaseBonus as $item) {
-            $newPrice = $item->updatePrice($newPrice);
+            $newPrice = $item->updatePrice($paymentInfoEntity);
+            $paymentInfoEntity->setAmount($newPrice);
         }
 
         return $newPrice;

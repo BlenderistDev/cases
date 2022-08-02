@@ -47,4 +47,12 @@ class PaymentInfoEntity
     {
         return $this->userId;
     }
+
+    /**
+     * @param int $amount
+     */
+    public function setAmount(int $amount): void
+    {
+        $this->amount = $amount;
+    }
 }
