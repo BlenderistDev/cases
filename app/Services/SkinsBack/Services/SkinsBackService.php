@@ -55,6 +55,10 @@ class SkinsBackService
         try {
             $payment = SkinsbackPayment::query()->where('transaction_id', '=', $transactionId)->first();
 
+            if (in_array($payment->status, ['success', 'fail'])) {
+                DB::commit();
+                return;
+            }
             switch ($status) {
                 case "success":
                     $payment->setAttribute('status', 'success');
