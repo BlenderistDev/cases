@@ -16,7 +16,7 @@ class SkinsBackController extends Controller
         $createDepositRequest->execute();
     }
 
-    public function paymentCallback(Request $request, SkinsBackService $skinsBackService, Logger $logger)
+    public function callback(Request $request, SkinsBackService $skinsBackService, Logger $logger)
     {
         $orderId = $request->get('order_id');
         $logger->log($orderId, $request->toArray(), self::METHOD);
