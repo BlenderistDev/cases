@@ -17,5 +17,6 @@ class VerifyCsrfToken extends Middleware
         '/api/user/tradelink',
         '/api/user/skin/out',
         '/api/freecase/open',
+        '/payment/skin/callback',
     ];
 }
