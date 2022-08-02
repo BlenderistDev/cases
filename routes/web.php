@@ -18,7 +18,7 @@ Route::get('auth/steam', [SteamAuthController::class, 'redirectToSteam'])->name(
 Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('auth.steam.handle');
 
 Route::get('/payment/skin', [\App\Http\Controllers\SkinsBackController::class, 'index']);
-Route::get('/payment/skin/callback', [\App\Http\Controllers\SkinsBackController::class, 'callback']);
+Route::post('/payment/skin/callback', [\App\Http\Controllers\SkinsBackController::class, 'callback']);
 
 Route::get('/me', function () {
     return auth()->user();
