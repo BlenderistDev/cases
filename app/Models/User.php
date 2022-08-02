@@ -68,8 +68,17 @@ class User extends Authenticatable
         'created_at',
     ];
 
+    protected $appends = [
+        'showBalance'
+    ];
+
     public function skins(): HasMany
     {
         return $this->hasMany(UserSkin::class);
+    }
+
+    public function getShowBalanceAttribute(): string
+    {
+        return sprintf("%01.2f", $this->balance / 100);
     }
 }
