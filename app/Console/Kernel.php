@@ -24,13 +24,13 @@ class Kernel extends ConsoleKernel
         $schedule->call(function (SkinUpdateService $skinUpdateService) {
             $skinUpdateService->updatePrices();
         })
-            ->everyFiveMinutes()
+            ->everySixHours()
             ->name('update prices');
 
         $schedule->call(function (SkinUpdateService $skinUpdateService) {
             $skinUpdateService->updateSkins();
         })
-            ->everyFiveMinutes()
+            ->everySixHours()
             ->name('update skins');
 
         $schedule->call(function (OpenDummyCaseService $openDummyCaseService, OptionsService $optionsService) {
