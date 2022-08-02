@@ -27,18 +27,18 @@ class SkinsBackService
         $this->signatureService->checkSignature($request);
 
         $this->process(
-            $request->get('transaction_id'),
-            $request->get('status', ''),
-            $request->get('amount', 0)
+            (string) $request->get('transaction_id'),
+            (string) $request->get('status', ''),
+            (float) $request->get('amount', 0)
         );
     }
 
     public function processFromResponse(Response $response)
     {
         $this->process(
-            $response->json('transaction_id'),
-            $response->json('status', ''),
-            $response->json('amount', 0)
+            (string) $response->json('transaction_id'),
+            (string) $response->json('status', ''),
+            (float) $response->json('amount', 0)
         );
     }
 
