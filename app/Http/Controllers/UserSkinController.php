@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserSkin;
 use App\Services\Market\MarketService;
+use App\Services\UserBalance\Entities\PaymentInfoEntity;
+use App\Services\UserBalance\Services\UserBalanceService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserSkinController extends Controller
 {
-    public function sell(Request $request): bool
+    public function sell(Request $request, UserBalanceService $userBalanceService): bool
     {
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request, $userBalanceService) {
             $userId = auth()->id();
             if (empty($userId)) {
                 throw new AuthorizationException();
@@ -35,10 +37,14 @@ class UserSkinController extends Controller
                 throw new \Exception("Пользователь не найден");
             }
 
-            $user->balance = $user->balance + $userSkin->skin()->first()->price;
-            if (!$user->save()) {
-                throw new \Exception("Ошибка при начислении баланса");
-            }
+            $paymentEntity = new PaymentInfoEntity(
+                null,
+                (int) ($userSkin->skin()->first()->price * 100),
+                'skin_sell',
+                $userId
+            );
+
+            $userBalanceService->increaseBalance($paymentEntity);
 
             if (!$userSkin->delete()) {
                 throw new \Exception("Ошибка продажи скина");
@@ -64,7 +70,3 @@ class UserSkinController extends Controller
         return true;
     }
 }
-
-//175548441
-//dN4rWm18
-

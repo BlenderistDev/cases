@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Loyalty::class, function (Application $app) {
             return new Loyalty([
                 $app->get(NameLoyalty::class),
-            ], [
                 $app->get(PaymentBonus::class)
             ]);
         });

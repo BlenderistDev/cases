@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace App\Services\Loyalty\Discounts\PaymentBonus;
 
-use App\Models\User;
 use App\Services\Loyalty\Discounts\PaymentBonus\Repositories\PaymentBonusRepository;
-use App\Services\Payments\Entities\PaymentInfoEntity;
-use App\Services\Users\Repositories\UserRepository;
+use App\Services\Loyalty\LoyaltyInterface;
+use App\Services\UserBalance\Entities\PaymentInfoEntity;
 
-class PaymentBonus
+class PaymentBonus implements LoyaltyInterface
 {
-    public function __construct(private PaymentBonusRepository $paymentBonusRepository, private UserRepository $userRepository)
+    public function __construct(private PaymentBonusRepository $paymentBonusRepository)
     {
     }
 
-    public function execute(PaymentInfoEntity $paymentInfoEntity): void
+    public function updatePrice(PaymentInfoEntity $paymentInfoEntity): int
     {
+        $amount = $paymentInfoEntity->getAmount();
 
         $paymentBonusInfo = $this->paymentBonusRepository->getPaymentBonusInfo();
 
         if ($paymentInfoEntity->getPromocode() !== $paymentBonusInfo->getPromocode()) {
-            return;
+            return $amount;
         }
 
         if ($paymentBonusInfo->getCurrentCount() >= $paymentBonusInfo->getMaxCount()) {
-            return;
+            return $amount;
         }
 
         $this->paymentBonusRepository->increaseCurrentCount();
 
-        $bonus = $paymentInfoEntity->getPrice() / 100 * $paymentBonusInfo->getValue();
-        $this->userRepository->addToBalance($bonus);
+        $bonus = $amount / 100 * $paymentBonusInfo->getValue();
+
+        return (int) ($amount + $bonus);
     }
 }

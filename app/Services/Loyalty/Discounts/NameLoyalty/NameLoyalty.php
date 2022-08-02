@@ -10,6 +10,7 @@ use App\Services\Loyalty\Exceptions\NoSteamIdException;
 use App\Services\Loyalty\Exceptions\NoSteamInfo;
 use App\Services\Loyalty\LoyaltyInterface;
 use App\Services\SteamInfo\SteamUserInfoService;
+use App\Services\UserBalance\Entities\PaymentInfoEntity;
 use function auth;
 
 class NameLoyalty implements LoyaltyInterface
@@ -18,7 +19,7 @@ class NameLoyalty implements LoyaltyInterface
     {
     }
 
-    public function updatePrice(int $price): int
+    public function updatePrice(PaymentInfoEntity $paymentInfoEntity): int
     {
         $user = auth()->user();
         if (empty($user)) {
@@ -39,12 +40,14 @@ class NameLoyalty implements LoyaltyInterface
 
         $loyaltyInfo = $this->nameLoyaltyRepository->getLoyaltyInfo();
 
+        $amount = $paymentInfoEntity->getAmount();
+
         if (!str_contains(strtoupper($steamInfo->getPersonaname()), strtoupper($loyaltyInfo->getPattern()))) {
-            return $price;
+            return $amount;
         }
 
-        $discount = (int) ($price / 100 * $loyaltyInfo->getValue());
+        $bonus = (int) ($amount / 100 * $loyaltyInfo->getValue());
 
-        return $price - $discount;
+        return $amount - $bonus;
     }
 }

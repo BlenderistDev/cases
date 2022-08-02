@@ -6,6 +6,7 @@ use App\Services\Cases\Services\OpenDummyCaseService;
 use App\Services\Loyalty\Discounts\PaymentGift\PaymentGift;
 use App\Services\Loyalty\Discounts\PaymentGift\Repositories\PaymentGiftRepository;
 use App\Services\Options\OptionsService;
+use App\Services\SkinsBack\Services\MissingCallbackService;
 use App\Services\SkinUpdate\SkinUpdateService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -68,6 +69,12 @@ class Kernel extends ConsoleKernel
                 ->cron("0 */$paymentGiftHours * * *")
                 ->name('payment gift raffle');
         }
+
+        $schedule->call(function (MissingCallbackService $missingCallbackService) {
+            $missingCallbackService->checkMissingCallbacks();
+        })
+            ->everyThreeMinutes()
+            ->name('check skinsback missing callbacks');
     }
 
     /**

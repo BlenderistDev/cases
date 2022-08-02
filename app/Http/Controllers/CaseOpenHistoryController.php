@@ -31,7 +31,6 @@ class CaseOpenHistoryController extends Controller
                 ->get()
                 ->first()
                 ->id;
-
         }
 
         return [

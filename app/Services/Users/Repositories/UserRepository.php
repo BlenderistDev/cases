@@ -9,11 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRepository
 {
-    public function addToBalance(int $sumToAdd): void
+    public function addToBalance(int $sumToAdd, int $userId): void
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = User::find($userId);
+
+        if (empty($user)) {
+            throw new \Exception("Пользователь не найден");
+        }
+
         $user->balance += $sumToAdd;
-        $user->save();
+
+        if(!$user->save()) {
+            throw new \Exception("Не удалось изменить баланс");
+        }
     }
 }

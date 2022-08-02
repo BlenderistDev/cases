@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Loyalty\Interfaces;
 
-use App\Services\Payments\Entities\PaymentInfoEntity;
+use App\Services\UserBalance\Entities\PaymentInfoEntity;
 
 interface AfterPaymentBonusInterface
 {

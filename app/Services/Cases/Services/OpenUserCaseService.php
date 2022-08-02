@@ -6,16 +6,19 @@ namespace App\Services\Cases\Services;
 
 use App\Models\Cases;
 use App\Models\CaseWinner;
-use App\Models\User;
 use App\Models\UserSkin;
+use App\Services\UserBalance\Entities\DecreaseBalanceEntity;
+use App\Services\UserBalance\Services\UserBalanceService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class OpenUserCaseService
 {
-    public function __construct(private OpenCaseService $openCaseService)
+    public function __construct(
+        private OpenCaseService $openCaseService,
+        private UserBalanceService $userBalanceService
+    )
     {
-
     }
 
     public function openCase(Cases $case, int $userId): UserSkin
@@ -56,19 +59,12 @@ class OpenUserCaseService
         return $userSkin;
     }
 
-    private function updateUserBalance(int $userId, mixed $price)
+    private function updateUserBalance(int $userId, int $price)
     {
-        $balance = User::find($userId)->balance;
-        if ($balance < $price) {
-            throw new Exception("Недостаточно средств");
-        }
-
-        $balanceDecreaseRes = User::query()
-            ->where(['id' => $userId])
-            ->update(['balance' => $balance - $price]);
-
-        if (!$balanceDecreaseRes) {
-            throw new Exception("Не удалось списать средства");
-        }
+        $this->userBalanceService->decreaseBalance(new DecreaseBalanceEntity(
+            (int) $price * 100,
+            $userId,
+            'case open'
+        ));
     }
 }
