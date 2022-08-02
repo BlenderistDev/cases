@@ -27,6 +27,7 @@ class CallbackErrorListRequest
     {
         $params = [
             'shopid' => getenv('SKINSBACK_CLIENT_ID'),
+            'method' => self::METHOD,
         ];
 
         $params['sign'] = $this->signatureService->buildSignature($params);
