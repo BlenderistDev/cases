@@ -35,6 +35,7 @@ class OrderStatusRequest
         $params = [
             'shopid' => getenv('SKINSBACK_CLIENT_ID'),
             'transaction_id' => $transactionId,
+            'method' => self::METHOD,
         ];
 
         $params['sign'] = $this->signatureService->buildSignature($params);
