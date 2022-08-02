@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Loyalty\Discounts\NameLoyalty;
 
+use App\Models\User;
 use App\Services\Loyalty\Discounts\NameLoyalty\Repositories\NameLoyaltyRepository;
 use App\Services\Loyalty\Exceptions\NoAuthException;
 use App\Services\Loyalty\Exceptions\NoSteamIdException;
@@ -21,7 +22,7 @@ class NameLoyalty implements LoyaltyInterface
 
     public function updatePrice(PaymentInfoEntity $paymentInfoEntity): int
     {
-        $user = auth()->user();
+        $user = User::find($paymentInfoEntity->getUserId());
         if (empty($user)) {
             throw new NoAuthException();
         }
