@@ -44,7 +44,7 @@ class OrderStatusRequest
 
         $this->logger->log($orderId, $params, self::METHOD, $response);
 
-        if ($response->status() !== 200 || empty($response->json()['status']) || $response->json()['status'] !== 'success') {
+        if ($response->status() !== 200) {
             throw new \Exception('Ошибка при проверки статуса оплаты');
         }
 
