@@ -45,11 +45,11 @@ class SkinsBackService
     /**
      * @param string $transactionId
      * @param string $status
-     * @param int $amount
+     * @param float $amount
      * @return void
      * @throws \Exception
      */
-    private function process(string $transactionId, string $status, int $amount): void
+    private function process(string $transactionId, string $status, float $amount): void
     {
         DB::beginTransaction();
         try {
