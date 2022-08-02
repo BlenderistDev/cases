@@ -36,9 +36,9 @@ class SkinsBackService
     public function processFromResponse(Response $response)
     {
         $this->process(
-            $response->get('transaction_id'),
-            $response->get('status', ''),
-            $response->get('amount', 0)
+            $response->json('transaction_id'),
+            $response->json('status', ''),
+            $response->json('amount', 0)
         );
     }
 
