@@ -31,7 +31,10 @@ Route::get('/cases', function () {
 });
 
 Route::get('/freecase', [\App\Http\Controllers\FreeCasesController::class, 'index']);
+
 Route::post('/freecase/open', [\App\Http\Controllers\FreeCasesController::class, 'open']);
+
+Route::get('/statistics', [\App\Http\Controllers\CaseStatisticsController::class, 'index']);
 
 Route::get('/categories', [CategoriesController::class, 'index']);
 
