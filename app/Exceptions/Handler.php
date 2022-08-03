@@ -53,9 +53,10 @@ class Handler extends ExceptionHandler
     {
         $code = 500;
 
-        if (strpos('/api/', $request->url()) !== false) {
+        if (strpos($request->url(), '/api/') !== false) {
             $code = 200;
         }
+
         if ($this->isHttpException($exception)) {
             if ($exception->getStatusCode() === 404) {
                 return response()->make(file_get_contents(public_path() . '/index.html'));
