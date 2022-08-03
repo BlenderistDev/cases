@@ -7,7 +7,7 @@ namespace App\Services\UserBalance\Entities;
 class PaymentInfoEntity
 {
     public function __construct(
-        private string $promocode,
+        private ?string $promocode,
         private int $amount,
         private string $source,
         private int $userId
@@ -17,9 +17,9 @@ class PaymentInfoEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPromocode(): string
+    public function getPromocode(): ?string
     {
         return $this->promocode;
     }

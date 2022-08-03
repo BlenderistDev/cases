@@ -64,7 +64,7 @@ class SkinsBackService
                     $payment->setAttribute('status', 'success');
                     $payment->setAttribute('amount', $amount);
                     $this->userBalanceService->increaseBalance(new PaymentInfoEntity(
-                        '',
+                        null,
                         (int) ($amount * 100),
                         self::SOURCE,
                         $payment->user_id
