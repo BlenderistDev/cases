@@ -8,6 +8,6 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        return Categories::with('cases')->get();
+        return Categories::with('cases', 'cases.skins')->get();
     }
 }
