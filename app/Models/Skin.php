@@ -22,7 +22,13 @@ class Skin extends Model
         'active',
     ];
 
-    protected $appends = ['img', 'name', 'rarity', 'short_name'];
+    protected $appends = [
+        'priceData',
+//        'img',
+//        'name',
+//        'rarity',
+//        'short_name'
+    ];
 
     public function prices(): HasMany
     {
@@ -50,6 +56,11 @@ class Skin extends Model
     public function getShortNameAttribute(): string
     {
         return preg_replace('/.?\(.*\)/', '', $this->name);
+    }
+
+    public function getPriceDataAttribute()
+    {
+        return $this->prices()->first();
     }
 
     public function scopeByRarity($query, array $rarity)
