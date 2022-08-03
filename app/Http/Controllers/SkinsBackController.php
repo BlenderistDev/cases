@@ -13,7 +13,9 @@ class SkinsBackController extends Controller
 
     public function index(CreateDepositRequest $createDepositRequest)
     {
-        $createDepositRequest->execute();
+        return [
+            'url' => $createDepositRequest->execute()
+        ];
     }
 
     public function callback(Request $request, SkinsBackService $skinsBackService, Logger $logger)

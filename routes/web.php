@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('auth/steam', [SteamAuthController::class, 'redirectToSteam'])->name('auth.steam');
 Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('auth.steam.handle');
 
-Route::get('/payment/skin', [\App\Http\Controllers\SkinsBackController::class, 'index']);
 Route::post('/payment/skin/callback', [\App\Http\Controllers\SkinsBackController::class, 'callback']);
 
 Route::get('/me', function () {

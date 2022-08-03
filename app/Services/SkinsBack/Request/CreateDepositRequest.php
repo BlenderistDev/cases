@@ -21,7 +21,7 @@ class CreateDepositRequest
     {
     }
 
-    public function execute()
+    public function execute(): string
     {
         $user = $this->getUser();
         $token = $this->getTradeToken($user);
@@ -54,7 +54,7 @@ class CreateDepositRequest
             throw new \Exception('Ошибка при создании транзакции');
         }
 
-        redirect($json['url'])->send();
+        return $json['url'];
     }
 
     /**
