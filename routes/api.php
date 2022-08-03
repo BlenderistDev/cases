@@ -26,9 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/cases', function () {
-    var_dump("azaza");
-});
+Route::get('/cases/{cases}', [\App\Http\Controllers\CasesController::class, 'index']);
 
 Route::get('/freecase', [\App\Http\Controllers\FreeCasesController::class, 'index']);
 

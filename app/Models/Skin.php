@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -23,11 +22,10 @@ class Skin extends Model
     ];
 
     protected $appends = [
-        'priceData',
-//        'img',
-//        'name',
-//        'rarity',
-//        'short_name'
+        'img',
+        'name',
+        'rarity',
+        'short_name'
     ];
 
     public function prices(): HasMany
@@ -56,11 +54,6 @@ class Skin extends Model
     public function getShortNameAttribute(): string
     {
         return preg_replace('/.?\(.*\)/', '', $this->name);
-    }
-
-    public function getPriceDataAttribute()
-    {
-        return $this->prices()->first();
     }
 
     public function scopeByRarity($query, array $rarity)

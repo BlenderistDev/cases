@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entities;
 
-use JetBrains\PhpStorm\Internal\TentativeType;
-
 class UserInfoEntity implements \JsonSerializable
 {
     private string $steamid;
