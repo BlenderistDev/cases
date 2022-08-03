@@ -85,6 +85,10 @@ class CreateDepositRequest
      */
     private function getTradeToken(User $user): string
     {
+        if (empty($user->steam_trade_link)) {
+            throw new \Exception('Некорректная ссылка для обмена');
+        }
+
         parse_str(parse_url($user->steam_trade_link, PHP_URL_QUERY), $parsedQuery);
 
         if (empty($parsedQuery['token'])) {
