@@ -163,13 +163,6 @@ class UserEditScreen extends Screen
      */
     public function save(User $user, Request $request)
     {
-        $request->validate([
-            'user.email' => [
-                'required',
-                Rule::unique(User::class, 'email')->ignore($user),
-            ],
-        ]);
-
         $permissions = collect($request->get('permissions'))
             ->map(function ($value, $key) {
                 return [base64_decode($key) => $value];
@@ -180,6 +173,8 @@ class UserEditScreen extends Screen
         $user->when($request->filled('user.password'), function (Builder $builder) use ($request) {
             $builder->getModel()->password = Hash::make($request->input('user.password'));
         });
+
+        $user->setAttribute('balance', (int) $request->input('user.balance'));
 
         $user
             ->fill($request->collect('user')->except(['password', 'permissions', 'roles'])->toArray())
