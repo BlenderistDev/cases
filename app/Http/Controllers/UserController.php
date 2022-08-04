@@ -17,7 +17,7 @@ class UserController extends Controller
 
         /** @var User $user */
         $user = User::find($id);
-        $user->load('skins', 'skins.skin', 'payments');
+        $user->load('skins', 'skins.skin', 'payments')->append('openCaseCount');
 
         return $user;
     }

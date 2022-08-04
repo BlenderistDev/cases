@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(PaymentHistory::class);
     }
 
+    public function caseWinners(): HasMany
+    {
+        return $this->hasMany(CaseWinner::class);
+    }
+
     public function getShowBalanceAttribute(): string
     {
         return sprintf("%01.2f", $this->balance / 100);
@@ -96,5 +101,10 @@ class User extends Authenticatable
             $amount += $payment->amount;
         }
         return floor($amount / 100);
+    }
+
+    public function getOpenCaseCountAttribute(): int
+    {
+        return $this->caseWinners()->count();
     }
 }
