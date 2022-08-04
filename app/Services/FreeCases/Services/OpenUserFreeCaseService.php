@@ -6,6 +6,7 @@ namespace App\Services\FreeCases\Services;
 
 use App\Models\FreeCases;
 use App\Models\FreeCasesWinner;
+use App\Models\User;
 use App\Models\UserSkin;
 use App\Services\FreeCases\Repositories\FreeCaseWinnerRepository;
 use Exception;
@@ -70,7 +71,8 @@ class OpenUserFreeCaseService
 
     private function getLastDayPaymentSum(int $userId): int
     {
-        // @todo fix
-        return 0;
+        $user = User::find($userId);
+
+        return (int) $user->lastPaymentSum;
     }
 }
