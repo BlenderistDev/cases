@@ -87,9 +87,15 @@ class SteamAuthController extends Controller
      */
     protected function findOrNewUser(SteamInfo $info)
     {
+        /** @var User $user */
         $user = User::where('steamid', $info->steamID64)->first();
 
         if (!is_null($user)) {
+            $user->setAttribute('name', $info->personaname);
+            $user->setAttribute('username', $info->personaname);
+            $user->setAttribute('avatar', $info->personaname);
+            $user->save();
+
             return $user;
         }
 
