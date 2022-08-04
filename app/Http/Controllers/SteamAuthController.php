@@ -92,7 +92,7 @@ class SteamAuthController extends Controller
 
         if (!is_null($user)) {
             $user->setAttribute('name', $info->personaname);
-            $user->setAttribute('avatar', $info->personaname);
+            $user->setAttribute('avatar', $info->avatarfull);
             $user->save();
 
             return $user;
