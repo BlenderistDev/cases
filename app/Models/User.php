@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Platform\Models\User as Authenticatable;
 
@@ -69,7 +70,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'showBalance'
+        'showBalance',
+        'lastPaymentSum',
     ];
 
     public function skins(): HasMany
@@ -77,8 +79,22 @@ class User extends Authenticatable
         return $this->hasMany(UserSkin::class);
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(PaymentHistory::class);
+    }
+
     public function getShowBalanceAttribute(): string
     {
         return sprintf("%01.2f", $this->balance / 100);
+    }
+
+    public function getLastPaymentSumAttribute(): int
+    {
+        $amount = 0;
+        foreach ($this->payments()->whereDate('created_at', '>', Carbon::now()->subDay())->get('amount') as $payment) {
+            $amount += $payment->amount;
+        }
+        return floor($amount / 100);
     }
 }

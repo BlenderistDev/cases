@@ -32,6 +32,8 @@ class PaymentHistoryListener
         $paymentHistory = new PaymentHistory();
         $paymentHistory->setAttribute('amount', $paymentEntity->getAmount());
         $paymentHistory->setAttribute('source', $paymentEntity->getSource());
+        $paymentHistory->setAttribute('user_id', $paymentEntity->getUserId());
+
         if (!$paymentHistory->save()) {
             throw new \Exception("Ошибка при сохранении истории платежей");
         }
