@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\CaseSkins;
 
 use App\Models\Skin;
+use Illuminate\Support\Facades\DB;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
@@ -29,26 +30,27 @@ class CaseSkinSelectLayout extends Rows
      */
     public function fields(): array
     {
+        $query = DB::table('skins');
+
         if ($this->rarity) {
-            $query = Skin::byRarity($this->rarity);
-        } else {
-            $query = Skin::query();
+            $query
+                ->join('skin_prices', 'skin_prices.market_hash_name', '=', 'skins.market_hash_name')
+                ->where('skin_prices.ru_rarity', '=', $this->rarity);
         }
 
         $query
-            ->where('market_hash_name', 'LIKE', '%' . $this->name . '%')
+            ->where('skins.market_hash_name', 'LIKE', '%' . $this->name . '%')
             ->limit(self::SKIN_LIMIT);
 
         if ($this->priceFrom) {
             $query
-                ->where('price', '>=', $this->priceFrom);
+                ->where('skins.price', '>=', $this->priceFrom);
         }
 
         if ($this->priceTo) {
             $query
-                ->where('price', '<=', $this->priceTo);
+                ->where('skins.price', '<=', $this->priceTo);
         }
-
 
         $skins = $query->get();
 
@@ -59,10 +61,6 @@ class CaseSkinSelectLayout extends Rows
         return [
             Select::make('skins')
                 ->empty('Не выбрано', '0')
-                ->fromQuery(
-                    Skin::where('market_hash_name', 'LIKE', $this->filters['name'] ?? ''),
-                    'market_hash_name'
-                )
                 ->options($options)
                 ->multiple()
         ];
