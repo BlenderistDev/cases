@@ -39,6 +39,9 @@ class PlatformProvider extends OrchidServiceProvider
                         Menu::make('Бесплатные кейсы')
                             ->icon('monitor')
                             ->route('platform.freeCases'),
+                        Menu::make('Редкость')
+                            ->icon('monitor')
+                            ->route('platform.rarity'),
                     ]
                 ),
             Menu::make('Категории')
