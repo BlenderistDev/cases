@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Rarity\Services\RarityService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +49,10 @@ class Skin extends Model
     public function getRarityAttribute(): string
     {
         $price = $this->prices()->first();
-        return (string) $price->ru_rarity;
+        /** @var RarityService $rarityService */
+        $rarityService = app()->get(RarityService::class);
+
+        return $rarityService->getColor((string) $price->ru_rarity);
     }
 
     public function getShortNameAttribute(): string

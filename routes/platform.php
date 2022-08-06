@@ -125,6 +125,9 @@ Route::screen('paymentGift/{paymentGift}/edit', PaymentGiftEditScreen::class)
 Route::screen('loyalty', LoyaltyScreen::class)
     ->name('platform.loyalty');
 
+Route::screen('rarity', \App\Orchid\Screens\Rarity\RarityListScreen::class)
+    ->name('platform.rarity');
+
 
 
 // Platform > System > Users
