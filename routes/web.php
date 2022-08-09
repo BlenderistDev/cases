@@ -19,6 +19,8 @@ Route::get('auth/steam/handle', [SteamAuthController::class, 'handle'])->name('a
 
 Route::post('/payment/skin/callback', [\App\Http\Controllers\SkinsBackController::class, 'callback']);
 
+Route::post('/payment/paypalych/callback', [\App\Http\Controllers\PayPalychController::class, 'callback']);
+
 Route::get('/me', function () {
     return auth()->user();
 });

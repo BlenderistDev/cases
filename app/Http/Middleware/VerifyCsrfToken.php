@@ -19,5 +19,6 @@ class VerifyCsrfToken extends Middleware
         '/api/freecase/open',
         '/payment/skin/callback',
         '/api/payment/paypalych',
+        '/payment/paypalych/callback',
     ];
 }
