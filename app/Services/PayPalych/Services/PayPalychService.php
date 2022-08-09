@@ -36,7 +36,7 @@ class PayPalychService
         $billId = $request->get('TrsId');
         $status = $request->get('Status');
 
-        $this->process($orderId, $billId, $status, $amount);
+        $this->process($orderId, $billId, $status, (float) $amount);
     }
 
     public function processFromResponse(Response $response): void
@@ -49,7 +49,7 @@ class PayPalychService
         );
     }
 
-    private function checkSignature(string $sign, float $amount, string $orderId): void
+    private function checkSignature(string $sign, string $amount, string $orderId): void
     {
         $apiToken = getenv('PAYPALYCH_API_KEY');
         $requestSign = strtoupper(md5($amount . ":" . $orderId . ":" . $apiToken));
