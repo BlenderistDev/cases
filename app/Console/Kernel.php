@@ -6,6 +6,7 @@ use App\Services\Cases\Services\OpenDummyCaseService;
 use App\Services\Loyalty\Discounts\PaymentGift\PaymentGift;
 use App\Services\Loyalty\Discounts\PaymentGift\Repositories\PaymentGiftRepository;
 use App\Services\Options\OptionsService;
+use App\Services\PayPalych\Services\MissingPaymentsService;
 use App\Services\SkinsBack\Services\MissingCallbackService;
 use App\Services\SkinUpdate\SkinUpdateService;
 use Illuminate\Console\Scheduling\Schedule;
@@ -75,6 +76,12 @@ class Kernel extends ConsoleKernel
         })
             ->everyThreeMinutes()
             ->name('check skinsback missing callbacks');
+
+        $schedule->call(function (MissingPaymentsService $missingPaymentsService) {
+            $missingPaymentsService->checkMissingPayments();
+        })
+            ->everyFiveMinutes()
+            ->name('check missing paypalych payments');
     }
 
     /**
