@@ -21,11 +21,11 @@ Route::post('/payment/skin/callback', [\App\Http\Controllers\SkinsBackController
 
 Route::post('/payment/paypalych/callback', [\App\Http\Controllers\PayPalychController::class, 'callback']);
 
-Route::get('/payment/paypalych/success', function () {
+Route::any('/payment/paypalych/success', function () {
     return redirect('/');
 });
 
-Route::get('/payment/paypalych/fail', function () {
+Route::any('/payment/paypalych/fail', function () {
     return redirect('/payalert');
 });
 
