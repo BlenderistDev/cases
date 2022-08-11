@@ -11,7 +11,6 @@ class LoyaltyController extends Controller
         PaymentBonusRepository $paymentBonusRepository,
     ): array {
         return [
-              'paymentGift' => PaymentGift::with('skin')->get(),
               'paymentBonus' => $paymentBonusRepository->getPaymentBonusInfo(),
         ];
     }
