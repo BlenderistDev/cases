@@ -15,7 +15,10 @@ class PaymentGiftWinnerController extends Controller
 
         return PaymentGiftWinner::query()
             ->whereDate('created_at', '>=', $timeFrom)
-            ->with(['user', 'dummy', 'paymentGift', 'paymentGift.skin'])
+            ->with([
+                'paymentGift' => fn($q) => $q->withTrashed(),
+                'paymentGift.skin',
+            ])
             ->orderByDesc('created_at')
             ->get();
     }
