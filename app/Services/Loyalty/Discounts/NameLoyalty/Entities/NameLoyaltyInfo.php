@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Loyalty\Discounts\NameLoyalty\Entities;
 
-class NameLoyaltyInfo
+
+class NameLoyaltyInfo implements \JsonSerializable
 {
     public function __construct(private int $value, private string $pattern)
     {
@@ -24,5 +25,13 @@ class NameLoyaltyInfo
     public function getPattern(): string
     {
         return $this->pattern;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'pattern' => $this->getPattern(),
+            'value' => $this->getValue()
+        ];
     }
 }
