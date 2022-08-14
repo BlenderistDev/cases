@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 class CreateBillRequest
 {
     private const URL = 'https://paypalych.com/api/v1/bill/create';
+    private const MIN_AMOUNT = 15;
 
     public function __construct(private Logger $logger)
     {
@@ -22,6 +23,10 @@ class CreateBillRequest
 
     public function execute(float $amount, string $promocode)
     {
+        if ($amount < self::MIN_AMOUNT) {
+            throw new \Exception(sprintf('Минимальная сумма для пополнения - %s', self::MIN_AMOUNT));
+        }
+
         $user = $this->getUser();
         $payment = $this->createPayment($user->id, $amount, $promocode);
         $orderId = $this->buildOrderId($payment->id, $user->id);
