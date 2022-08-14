@@ -54,4 +54,6 @@ Route::post('/case/open', [OpenCaseController::class, 'index']);
 
 Route::post('/user/tradelink', [UserController::class, 'setTradeLink']);
 
+Route::get('/me/skin', [UserSkinController::class, 'index']);
+
 Route::get('/me', [UserController::class, 'index']);

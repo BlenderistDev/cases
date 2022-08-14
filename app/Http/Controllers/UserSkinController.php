@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\DB;
 
 class UserSkinController extends Controller
 {
+    public function index()
+    {
+        $userId = auth()->id();
+        if (empty($userId)) {
+            throw new AuthorizationException();
+        }
+
+        return UserSkin::query()
+            ->where('user_id', '=', $userId)
+            ->with('skin')
+            ->get();
+    }
+
     public function sell(Request $request, UserBalanceService $userBalanceService): bool
     {
         DB::transaction(function () use ($request, $userBalanceService) {
