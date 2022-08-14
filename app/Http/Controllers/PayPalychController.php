@@ -15,7 +15,7 @@ class PayPalychController extends Controller
             throw new \Exception("Не указана сумма");
         }
 
-        return ['url' => $createBillRequest->execute($amount, $request->get('promocode', ''))];
+        return ['url' => $createBillRequest->execute((float) $amount, $request->get('promocode', ''))];
     }
 
     public function callBack(Request $request, PayPalychService $payPalychService)
