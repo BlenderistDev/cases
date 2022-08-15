@@ -47,6 +47,9 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Категории')
                 ->icon('monitor')
                 ->route('platform.categories'),
+            Menu::make('Настройки')
+                ->icon('monitor')
+                ->route('platform.settings'),
             Menu::make('Лояльность')
                 ->icon('monitor')
                 ->slug('loyalty')

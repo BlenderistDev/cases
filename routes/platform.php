@@ -128,7 +128,8 @@ Route::screen('loyalty', LoyaltyScreen::class)
 Route::screen('rarity', \App\Orchid\Screens\Rarity\RarityListScreen::class)
     ->name('platform.rarity');
 
-
+Route::screen('settings',\App\Orchid\Screens\Settings\SettingsScreen::class)
+    ->name('platform.settings');
 
 // Platform > System > Users
 Route::screen('users/{user}/edit', UserEditScreen::class)

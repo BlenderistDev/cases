@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index']);
+
 Route::get('/payment/skin', [\App\Http\Controllers\SkinsBackController::class, 'index']);
 
 Route::post('/payment/paypalych', [\App\Http\Controllers\PayPalychController::class, 'index']);
